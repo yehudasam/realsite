@@ -1,0 +1,15 @@
+name: Add sort.js to episodes
+on: workflow_dispatch
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          sed -i 's|</body></html>|<script src="./js/sort.js"></script></body></html>|g' episodes/*.html
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git commit -am "Add sort.js to all episode pages" || exit 0
+          git push

@@ -19,3 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+// נרמול אוטומטי של קישורים לפרקים: הסרת שמות אורחים/תוספות משם הקובץ (למשל 44-yoel-rak.html -> 44.html)
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('a[href*="episodes/"]').forEach(function (link) {
+    var href = link.getAttribute('href');
+    // תופס מספר פרק (1 עד 999) שאחריו מקף וטקסט לפני .html (לא נוגע ב-0-intro או bonus-mondial)
+    var cleanHref = href.replace(/(episodes\/[1-9]\d*)-[^\/#?]+\.html/i, '$1.html');
+    if (cleanHref !== href) {
+      link.setAttribute('href', cleanHref);
+    }
+  });
+});
